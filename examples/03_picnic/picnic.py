@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Author: Mery Touceda-Suarez <mtoucedasuarez@arizona.edu>
-Purpose: Say hello
+Purpose: List picnic foods
 """
 
 import argparse
@@ -10,15 +10,15 @@ import argparse
 def get_args(): 
     """ Get the command-line arguments """
 
-    parser = argparse.ArgumentParser(description = 'Say hello')
-    parser.add_argument('-n', '--name', metavar = 'name', default = 'World', help =  'Name to greet')
+    parser = argparse.ArgumentParser(description = 'Crow\'s Nest -- choose the correct article')
+    parser.add_argument()
     return parser.parse_args()
 
 # ---------------------------------------------------------
 def main(): 
     """ Make a jazz noise here """
     args = get_args()
-    print('Hello, ' + args.name + '!')
+
 
 # ---------------------------------------------------------
 if __name__ == '__main__':
