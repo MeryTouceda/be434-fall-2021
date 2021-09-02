@@ -10,7 +10,7 @@ import argparse
 def get_args(): 
     """ Get the command-line arguments """
 
-    parser = argparse.ArgumentParser(description = 'Crow\'s Nest -- choose the correct article')
+    parser = argparse.ArgumentParser(description = '')
     parser.add_argument()
     return parser.parse_args()
 
