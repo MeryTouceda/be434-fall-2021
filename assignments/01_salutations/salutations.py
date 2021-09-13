@@ -43,13 +43,11 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    greeting_arg = args.greeting
-    name_arg = args.name
-    excited_arg = args.excited
     
-    bang = '!' if excited_arg == True else '.'
+    ending = '!' if args.excited else '.'
 
-    print('{}, {}{}'.format(greeting_arg, name_arg, bang))
+    print('{}, {}{}'.format(args.greeting, args.name, ending))
+   
    
 
 

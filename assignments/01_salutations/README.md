@@ -113,7 +113,7 @@ cp ../../bin/new.py ~/.local/bin
 Verify that the program can be found using `which`:
 
 ```
-$ which new.py
+$ ca
 /Users/kyclark/.local/bin/new.py
 ```
 
