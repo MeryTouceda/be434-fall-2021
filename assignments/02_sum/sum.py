@@ -17,9 +17,9 @@ def get_args():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('number',
-                        metavar='int',
-                        nargs='+',
-                        type=int,
+                        metavar='int',          # this is going to be in the usage to indicate the type of this var
+                        nargs='+',              # this means one or more arguments
+                        type=int,               # enforces the type in the script (argpars will convert strings of command line into int)
                         help='Numbers to add')
 
     
@@ -39,10 +39,13 @@ def main():
     if len(numbers) == 1:                               # if we have only one number
         line = str(numbers[0])                          # then the result to show is just the number 
     else:                                               # if we have more than one number
-        string_ints = [str(int) for int in numbers]     # convert the input integers into string
+        string_ints = [str(n) for n in numbers]     # convert the input integers into string
         line = ' + '.join(string_ints)                  # join the numbers with a "+" sign
 
     print('{} = {}'.format(line,str(sum(numbers))))     # print the line and the sum 
+
+    #another option
+    #print('{} = {}'.format(' + '.join(map(str, numbers)), sum(numbers)))
 
 
 # --------------------------------------------------
