@@ -31,16 +31,18 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    numbers = args.number
+    numbers = args.number                               # store the arguments in a variable
 
+    # This block of code creates the string to 
+    # ... print of all the numbers added
     line = ''
-    if len(numbers) == 1: 
-        line = str(numbers[0])
-    else: 
-        string_ints = [str(int) for int in numbers] 
-        line = ' + '.join(string_ints)
+    if len(numbers) == 1:                               # if we have only one number
+        line = str(numbers[0])                          # then the result to show is just the number 
+    else:                                               # if we have more than one number
+        string_ints = [str(int) for int in numbers]     # convert the input integers into string
+        line = ' + '.join(string_ints)                  # join the numbers with a "+" sign
 
-    print('{} = {}'.format(line,str(sum(numbers))))
+    print('{} = {}'.format(line,str(sum(numbers))))     # print the line and the sum 
 
 
 # --------------------------------------------------
