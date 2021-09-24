@@ -2,7 +2,7 @@
 """
 Author : mtoucedasuarez <mtoucedasuarez@localhost>
 Date   : 2021-09-15
-Purpose: Rock the Casbah
+Purpose: Jump the 5 but arguments on command line don't need to be a string
 """
 
 import argparse

@@ -16,7 +16,8 @@ def get_args():
         description='Tell me the lyrics to the Sound of Music',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('text',
+    # positional argument with multiple values
+    parser.add_argument('text', 
                         metavar='str',
                         nargs='+',
                         help='Solfege')
@@ -30,19 +31,17 @@ def main():
 
     args = get_args()
     text = args.text
-    sound = {'Do': 'A deer, a female deer',
-                'Re': 'A drop of golden sun',
-                'Mi': 'A name I call myself',
-                'Fa': 'A long long way to run',
-                'Sol': 'A needle pulling thread',
-                'La': 'A note to follow sol',
-                'Ti': 'A drink with jam and bread'}
+    #create the dictionary that stores the notes as keys and verses as values
+    sound = {'Do': 'A deer, a female deer', 'Re': 'A drop of golden sun',
+             'Mi': 'A name I call myself', 'Fa': 'A long long way to run',
+             'Sol': 'A needle pulling thread', 'La': 'A note to follow sol',
+             'Ti': 'A drink with jam and bread'}
 
-    for word in text:
-        if word in sound:
-            print('{}, {}'.format(word, sound.get(word)))
-        else:
-            print("I don't know \"{}\"".format(word))
+    for word in text:                                       #for every word in the string of text
+        if word in sound:                                   # if the word is a key in the dictionary  
+            print('{}, {}'.format(word, sound.get(word)))   # print the word and the value stored under that key
+        else:                                           
+            print("I don't know \"{}\"".format(word))       # otherwise print "I don't know" and the word in the command line argument
 
 
 # --------------------------------------------------

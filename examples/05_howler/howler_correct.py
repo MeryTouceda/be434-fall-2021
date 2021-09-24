@@ -30,32 +30,24 @@ def get_args():
 
 
 
-    return parser.parse_args()
+    args = parser.parse_args()                                           
+ 
+    if os.path.isfile(args.text):                                        
+        args.text = open(args.text).read().rstrip()                      
+ 
+    return args 
 
 
 # --------------------------------------------------
 def main():
     """Make a jazz noise here"""
 
-    args = get_args()
-    text = args.text
+    args = get_args()                                                   
+    out_fh = open(args.outfile, 'wt') if args.outfile else sys.stdout   
+    out_fh.write(args.text.upper() + '\n')                              
+    out_fh.close()                                                      
+ 
 
-    if os.path.isfile(text): 
-        if args.outfile: 
-            out_fh = open(args.outfile,'wt')
-            out_fh.write(open(text).read().upper() + '\n')
-            out_fh.close()
-        else:
-            print("{}".format(open(text).read().upper()))
-    else: 
-        if args.outfile: 
-            out_fh = open(args.outfile,'wt')
-            out_fh.write(text.upper() + '\n')
-            out_fh.close()
-        else:
-            print("{}".format(text).upper())
-
-#  WHY DOESN'T THIS WORK???
 
 
 # --------------------------------------------------
