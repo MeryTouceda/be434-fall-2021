@@ -26,14 +26,13 @@ def get_args():
                         '--codons',
                         help='A file with codon translations',
                         metavar='FILE',
-                        type=argparse.FileType('rt'),
-                        default=None)
+                        type=argparse.FileType('rt'))
 
     parser.add_argument('-o',
                         '--output',
                         help='Output filename',
                         metavar='FILE',
-                        type=str,
+                        type=argparse.FileType('wt'),
                         default='out.txt')
                                           
     return parser.parse_args()
@@ -44,16 +43,25 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
+    seq = args.sequence
+    fh = args.codons # I don't need to do open because I don't have a string, I have a file (handle?) directly
+    out_fh = args.output
     
-    if os.path.isfile(args.output):
-        out_fh = open(args.output, 'wt')
-        out_fh.write()                              
-        out_fh.close()
-        print("Output written to {}".format(args.output))
-    
-    else: 
-        print("Output wirtten to out.txt")
-     
+    # read codons into a dictionary
+    codons = dict()
+    for line in fh: 
+        key, value = line.split()
+        codons[key] = value
+
+    # translate the sequence
+    k = 3
+    for kmer in [seq[i:i + k] for i in range(0, len(seq) - k + 1)]:
+        if kmer in codons: 
+            #out_fh = open(args.output, 'wt')
+            out_fh.write(codons.get(kmer,'-'))                              
+            out_fh.close()
+            print("Output written to {}".format(out_fh.name))
+
 
 
 
