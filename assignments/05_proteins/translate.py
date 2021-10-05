@@ -6,9 +6,6 @@ Purpose: Translate DNA/RNA to proteins
 """
 
 import argparse
-import os
-#import sys
-from pprint import pprint
 
 
 # --------------------------------------------------
@@ -27,7 +24,7 @@ def get_args():
                         '--codons',
                         help='A file with codon translations',
                         metavar='FILE',
-                        required= True, 
+                        required=True,
                         type=argparse.FileType('rt'))
 
     parser.add_argument('-o',
@@ -36,7 +33,6 @@ def get_args():
                         metavar='FILE',
                         type=argparse.FileType('wt'),
                         default='out.txt')
-                                          
     return parser.parse_args()
 
 
@@ -48,26 +44,29 @@ def main():
     seq = args.sequence
     fh = args.codons
     out_fh = args.outfile
-    
-    # read codons into a dictionary
-    codons = dict()
-    for line in fh: 
+
+    # Read codons into a dictionary
+    codons = {}
+    for line in fh:
         key, value = line.split()
-        #key, value = line.rstrip().split()                         # this seems to do the same
+        # key, value = line.rstrip().split()  # this seems to do the same
         codons[key] = value
-    #pprint(codons) # to check codons is created right
+    # pprint(codons) #to check codons is created right
 
-    # translate the sequence
-    k = 3                                                           # set to desired kmer length
-    proteinseq = list()                                             # initialize sequence to store the protein sequence
-    for kmer in [seq[i:i + k] for i in range(0, len(seq), k)]:      # loop over kmers in sequence (sliding window = k)
-        #print(kmer)                                                # to check for loop works
-        proteinseq.append(codons.get(kmer.upper(),'-'))             # add value (AA) of kmer key (codon) to list
+    # Translate the sequence
+    k = 3  # set to desired kmer length
+    proteinseq = []  # initialize sequence to store the protein sequence
+    # loop over kmers in sequence (sliding window = k)
+    for kmer in [seq[i:i + k] for i in range(0, len(seq), k)]:
+        # print(kmer)  # to check for loop works
+        # Add value (AA) of kmer key (codon) to list
+        proteinseq.append(codons.get(kmer.upper(), '-'))
 
-    # write output to file 
-    out_fh.write(''.join(proteinseq))                              # write the contents of list as a string to file
+    # Write output to file
+    out_fh.write(''.join(proteinseq))
     out_fh.close()
     print('Output written to "{}".'.format(out_fh.name))
+
 
 # --------------------------------------------------
 if __name__ == '__main__':
