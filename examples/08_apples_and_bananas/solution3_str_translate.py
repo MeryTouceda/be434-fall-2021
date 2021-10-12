@@ -38,7 +38,7 @@ def main():
 
     args = get_args()
     vowel = args.vowel
-    trans = str.maketrans('aeiouAEIOU', vowel * 5 + vowel.upper() * 5)
+    trans = str.maketrans('aeiouAEIOU', vowel * 5 + vowel.upper() * 5) #make translation table, all possible values to the value in question
     text = args.text.translate(trans)
 
     print(text)
