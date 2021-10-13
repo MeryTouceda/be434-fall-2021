@@ -2,7 +2,7 @@
 """
 Author : mtoucedasuarez <mtoucedasuarez@localhost>
 Date   : 2021-10-08
-Purpose: Rock the Casbah
+Purpose: Find common words between two files
 """
 
 import argparse
@@ -39,7 +39,7 @@ def get_args():
 
 # --------------------------------------------------
 def main():
-    """Make a jazz noise here"""
+    """Find common words between two files"""
 
     args = get_args()
     fh1 = args.file1
@@ -51,7 +51,8 @@ def main():
     file2 = fh2.read().split()
 
     # find the shared words between the two lists
-    shared = sorted(list(set(file1).intersection(file2)))
+    # shared = sorted(list(set(file1).intersection(file2)))
+    shared = list(set(file1).intersection(file2))
 
     # print out to output file or STDIN
     if output_file:
