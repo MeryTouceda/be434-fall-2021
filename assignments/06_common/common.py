@@ -46,9 +46,19 @@ def main():
     fh2 = args.file2
     output_file = args.outfile
 
-    for line in fh1: 
-        
+    # convert files into list of words
+    file1 = fh1.read().split()
+    file2 = fh2.read().split()
 
+    # find the shared words between the two lists
+    shared = sorted(list(set(file1).intersection(file2)))
+
+    # print out to output file or STDIN
+    if output_file:
+        output_file.write('\n'.join(shared))
+        output_file.close()
+    else:
+        print('\n'.join(shared))
 
 
 # --------------------------------------------------
