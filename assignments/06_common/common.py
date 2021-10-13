@@ -14,7 +14,7 @@ def get_args():
     """Get command-line arguments"""
 
     parser = argparse.ArgumentParser(
-        description='Rock the Casbah',
+        description='Find common words',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('file1',
@@ -59,7 +59,7 @@ def main():
         output_file.write('\n'.join(shared))
         output_file.close()
     else:
-        print('\n'.join(shared))
+        print('\n'.join(shared), end='\n')
 
 
 # --------------------------------------------------
