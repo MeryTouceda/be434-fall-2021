@@ -17,8 +17,8 @@ def get_args():
         description='Expand IUPAC codes',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('SEQ',
-                        metavar='str',
+    parser.add_argument('seq',
+                        metavar='SEQ',
                         nargs= '+',
                         help='Input sequence(s)')
 
@@ -37,7 +37,7 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    sequence_list = args.SEQ
+    sequence_list = args.seq
 
     # create the dictionary with the code
     iupac = {'A':'A', 'C':'C', 'G':'G', 'T':'T', 'U':'U', 
@@ -45,18 +45,33 @@ def main():
             'M':'AC', 'B':'CGT', 'D':'AGT', 'H':'ACT', 
             'V':'ACG', 'N': 'ACGT'}
     
-    for seq in sequence_list: 
+    # for every sequence in the list of sequences provided
+    for seq in sequence_list:
+        output_seq = "" # initialize output sequence
+        output_re = "" # initialize output regular expression
+
+        # for every item (letter) in the sequence
         for item in seq: 
+            # if the value in dictionary is more than one base
             if len(iupac.get(item)) > 1:
-                print('{} [{}]'.format(item, iupac.get(item)))
+                output_seq = output_seq + item
+                # store the regular expression with brakets
+                output_re = output_re + '[{}]'.format(iupac.get(item))
             else: 
-                print('{} {}'.format(item, iupac.get(item))) 
+                output_seq = output_seq + item
+                output_re = output_re + iupac.get(item)
+        
+        # output to file if output file provided
+        if args.outfile:
+            args.outfile.write('{} {}'.format(output_seq, output_re))
+        # otherwise print it on command
+        else:
+            print('{} {}'.format(output_seq, output_re))
+
+    args.outfile.close()
 
 
-
-  
-
-
+    
 
 # --------------------------------------------------
 if __name__ == '__main__':
