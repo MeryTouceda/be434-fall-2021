@@ -54,21 +54,18 @@ def main():
         for item in seq: 
             # if the value in dictionary is more than one base
             if len(iupac.get(item)) > 1:
-                output_seq = output_seq + item
+                #output_seq = output_seq + item
                 # store the regular expression with brakets
                 output_re = output_re + '[{}]'.format(iupac.get(item))
             else: 
                 output_seq = output_seq + item
                 output_re = output_re + iupac.get(item)
         
-        # output to file if output file provided
-        if args.outfile:
-            args.outfile.write('{} {}'.format(output_seq, output_re))
-        # otherwise print it on command
-        else:
-            print('{} {}'.format(output_seq, output_re))
+        print('{} {}'.format(seq, output_re), file = args.outfile)
+    
+    print('Done, see {}', format(args.outfile))
 
-    args.outfile.close()
+    
 
 
     
