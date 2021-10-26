@@ -6,7 +6,6 @@ Purpose: Find common k-mers between two files
 """
 
 import argparse
-import sys
 
 
 # --------------------------------------------------
@@ -26,7 +25,7 @@ def get_args():
                         help='Input file 2',
                         metavar='FILE2',
                         type=argparse.FileType('rt'))
-    
+
     parser.add_argument('-k',
                         '--kmer',
                         help='K-mer size',
@@ -38,16 +37,14 @@ def get_args():
 
     # make sure kmer size is greater than 0
     if args.kmer < 1:
-        parser.error(f'--kmer "{args.kmer}" must be > 0')    
-    
+        parser.error(f'--kmer "{args.kmer}" must be > 0')
+
     return args
 
 
 # --------------------------------------------------
 def main():
     """Find common words between two files"""
-
-    # The goal is to create a function for the first file and repeat it for the second. So create a function and use it for both files. 
 
     args = get_args()
     fh1 = args.file1
@@ -57,36 +54,37 @@ def main():
     # create dictionaries with kmer and occurrences in file
     # file 1
     words1 = count_kmers(fh1, k)
-    #print(words1)
+    # print(words1)
 
-    #file 2
+    # file 2
     words2 = count_kmers(fh2, k)
-    #print(words2)
-    
+    # print(words2)
 
     # find shared
     shared = list(set(words1).intersection(words2))
 
     # print
     for kmer in shared:
-        print('{:10}{:5}{:5}'.format(kmer, words1.get(kmer), words2.get(kmer)), end = '\n')
-
+        print('{:10} {:5} {:5}'.format(
+            kmer, words1.get(kmer), words2.get(kmer)), end='\n')
 
 
 # --------------------------------------------------
 def find_kmers(seq, k):
-     """ Find k-mers in string
-     takes: 
-     seq - sequence (word)
-     k - kmer size
-     returns: list of kmers in sequence """
+    """ Find k-mers in string
+    takes:
+    seq - sequence (word)
+    k - kmer size
+    returns: list of kmers in sequence """
 
-     n = len(seq) - k + 1
-    
-     return [] if n < 1 else [seq[i:i + k] for i in range(n)]
+    n = len(seq) - k + 1
+
+    return [] if n < 1 else [seq[i:i + k] for i in range(n)]
 
 # --------------------------------------------------
-def count_kmers(fh,k): 
+
+
+def count_kmers(fh, k):
     """ Count kmers in file and create a dictionary
     takes:
     fh - file handle of file in which we want to count kmers
@@ -98,7 +96,7 @@ def count_kmers(fh,k):
         for word in line.split():
             for kmer in find_kmers(word, k):
                 if kmer in words:
-                    words[kmer] +=1  
+                    words[kmer] += 1
                 else:
                     words[kmer] = 1
     return words
@@ -114,6 +112,7 @@ def test_find_kmers():
     assert find_kmers('ACTG', 3) == ['ACT', 'CTG']
     assert find_kmers('ACTG', 4) == ['ACTG']
     assert find_kmers('ACTG', 5) == []
+
 
 # --------------------------------------------------
 if __name__ == '__main__':
