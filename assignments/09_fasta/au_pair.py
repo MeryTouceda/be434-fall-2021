@@ -48,13 +48,30 @@ def main():
         r1_ids = ids_list[0::2]
         r2_ids = ids_list[1::2]
 
-        # igual seria mejor hacer un diccionario
+        # make the dictionaries out of the lists
+        r1_dict = make_dict(r1_ids, r1_seqs)
+        r2_dict = make_dict(r2_ids, r2_seqs)
 
-        print(f'ALL: {parse_fasta(file)}')
+        print(f'r1 : {r1_dict}')
+        print(f'r2 : {r2_dict}')
+
+# this method is not working very much
+
+
+def make_dict(keys, values):
+    """"""
+    res = {}
+    for key in keys:
+        for value in values:
+            res[key] = value
+            #values.remove(value)
+        break 
+    return res
+
     
-    print(f' Sequence list: {sequence_list}')
-    print(f' IDs list: {ids_list}')
-    # print(f'R1: {r1}')
+    #print(f' Sequence list: {sequence_list}')
+    #print(f' IDs list: {ids_list}')
+    #print(f'R1: {r1}')
     # print(f'R2: {r2}')
 
 
