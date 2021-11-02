@@ -6,6 +6,7 @@ Purpose: Split fasta files into forward and reverse files
 """
 
 import argparse
+import os
 from Bio import SeqIO
 
 
@@ -18,80 +19,51 @@ def get_args():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     parser.add_argument('files',
-                        nargs = '+',
+                        nargs='+',
                         metavar='FILE',
-                        help='Input file(s)', 
+                        help='Input file(s)',
                         type=argparse.FileType('rt'))
-
 
     parser.add_argument('-o',
                         '--outdir',
                         help='Output directory',
                         metavar='DIR',
-                        default='split', 
-                        type=argparse.FileType('wt'))
-
+                        default='split',
+                        type=str)
 
     return parser.parse_args()
 
 
 # --------------------------------------------------
 def main():
-    """Make a jazz noise here"""
+    """ Split fasta into forward and reverse reads.
+    Create two files in the output directory where those reads
+    will be stored.
+    """
 
     args = get_args()
+    out_dir = args.outdir
+
+    if not os.path.isdir(out_dir):
+        os.makedirs(out_dir)
 
     for file in args.files:
-        ids_list,sequence_list = parse_fasta(file)
-        r1_seqs = sequence_list[0::2]
-        r2_seqs = sequence_list[1::2]
-        r1_ids = ids_list[0::2]
-        r2_ids = ids_list[1::2]
-
-        # make the dictionaries out of the lists
-        r1_dict = make_dict(r1_ids, r1_seqs)
-        r2_dict = make_dict(r2_ids, r2_seqs)
-
-        print(f'r1 : {r1_dict}')
-        print(f'r2 : {r2_dict}')
-
-# this method is not working very much
-
-
-def make_dict(keys, values):
-    """"""
-    res = {}
-    for key in keys:
-        for value in values:
-            res[key] = value
-            #values.remove(value)
-        break 
-    return res
-
-    
-    #print(f' Sequence list: {sequence_list}')
-    #print(f' IDs list: {ids_list}')
-    #print(f'R1: {r1}')
-    # print(f'R2: {r2}')
-
-
-
-
-
-# --------------------------------------------------
-def parse_fasta(file): 
-    """Make a jazz noise here"""
-
-    reader = SeqIO.parse(file, 'fasta')
-    sequences = []
-    ids = []
-    for rec in reader:
-        ids.append(rec.id)
-        sequences.append(str(rec.seq))
-        #print('ID :', rec.id)
-        #print('Seq:', str(rec.seq))
-    return(ids, sequences)
-
+        basename = os.path.basename(file.name)
+        root, ext = os.path.splitext(basename)
+        with open(os.path.join(out_dir, root + '_1' + ext),
+                  "wt", encoding='utf-8') as f_outfile:
+            with open(os.path.join(out_dir, root + '_2' + ext),
+                      "wt", encoding='utf-8') as r_outfile:
+                for i, record in enumerate(SeqIO.parse(file, 'fasta')):
+                    if i % 2 == 0:
+                        # print(f'Odd : {record.id} \n {record.seq}')
+                        f_outfile.write(str(">" + record.id + '\n'))
+                        f_outfile.write(str(record.seq + '\n'))
+                    else:
+                        # print(f'Even : {record.id} \n {record.seq}')
+                        r_outfile.write(str(">" + record.id + '\n'))
+                        r_outfile.write(str(record.seq + '\n'))
+    print(f'Done, see output in "{out_dir}"')
 
 
 # --------------------------------------------------
