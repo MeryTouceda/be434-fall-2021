@@ -55,6 +55,8 @@ def main():
             with open(os.path.join(out_dir, root + '_2' + ext),
                       "wt", encoding='utf-8') as r_outfile:
                 for i, record in enumerate(SeqIO.parse(file, 'fasta')):
+                    # alternative line for all the following (if statement) + is_even function
+                    #SeqIO.write(record, f_outfile if is_even() else r_outfile, "fasta")
                     if i % 2 == 0:
                         # print(f'Odd : {record.id} \n {record.seq}')
                         f_outfile.write(str(">" + record.id + '\n'))
@@ -64,6 +66,13 @@ def main():
                         r_outfile.write(str(">" + record.id + '\n'))
                         r_outfile.write(str(record.seq + '\n'))
     print(f'Done, see output in "{out_dir}"')
+
+
+# # --------------------------------------------------
+# def is_even(num):
+#     # Return True if number is even
+
+#     return num % 2 == 0
 
 
 # --------------------------------------------------
