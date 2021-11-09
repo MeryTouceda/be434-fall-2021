@@ -21,7 +21,12 @@ def get_args():
                         type=argparse.FileType('rt'),
                         help='Input file')
 
-    return parser.parse_args()
+    args = parser.parse_args()
+
+    if len(args.file.read().split()) == 1:
+        parser.error('Must provide a file containing multiple sequences')
+
+    return args
 
 
 # --------------------------------------------------
@@ -37,7 +42,7 @@ def main():
 
 # --------------------------------------------------
 def create_alignment(sequences):
-    """ Makes alingment:
+    """ Makes alingment: 
     takes: a file with multiple sequences
     returns: the character sequence of an alignment as a str
     (X) = no alignment
