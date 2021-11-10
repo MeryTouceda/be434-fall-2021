@@ -30,6 +30,10 @@ def main():
 
     args = get_args()
     sequences = args.file.read().split()
+
+    if len(sequences) < 2:
+        sys.exit("Input file must contain 2 or more sequences")
+
     alignment = create_alignment(sequences)
     print('\n'.join(sequences))
     print(alignment)
@@ -56,6 +60,15 @@ def create_alignment(sequences):
             alignment.append('X')
     # return(len(alignment))
     return ''.join(alignment)
+
+
+# --------------------------------------------------
+def test_create_alignment():
+    """ Test """
+
+    assert create_alignment(['A', 'A']) == '|'
+    assert create_alignment(['A', 'B']) == 'X'
+    assert create_alignment(['AA', 'AB']) == '|X'
 
 
 # --------------------------------------------------
