@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """
-Author : mtoucedasuarez <mtoucedasuarez@localhost>
+Author : Mery Touceda-Suarez <mtoucedasuarez@email.arizona.edu>
+         Ken Youens-Clark
 Date   : 2021-11-08
 Purpose: Find conserved bases
 """
 
 import argparse
+import sys
 
 
 # --------------------------------------------------
