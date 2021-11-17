@@ -8,6 +8,7 @@ Purpose: Run-length encoding/data compression
 import argparse
 import os
 
+
 # --------------------------------------------------
 def get_args():
     """Get command-line arguments"""
@@ -36,13 +37,12 @@ def main():
     for seq in args.text.splitlines():
         print(rle(seq))
 
+
 # --------------------------------------------------
-def rle(seq):
-#def rle(seq: str) -> str:
+def rle(seq: str) -> str:
     """ Create RLE """
 
-
-    combined= []
+    combined = []
     prev = ''
     count = 0
 
@@ -51,19 +51,18 @@ def rle(seq):
             prev = base
             count = 1
         elif base == prev:
-            count +=1
-        else: # if base and previous are not same, move up one
+            count += 1
+        else:  # if base and previous are not same, move up one
             combined.append([prev, count])
             prev = base
             count = 1
-    combined.append([prev, count]) # for the final set
+    combined.append([prev, count])  # for the final set
 
     ret = ''
     for char, count in combined:
-        ret += '{}{}'.format(char,count if count > 1 else '')
+        ret += '{}{}'.format(char, count if count > 1 else '')
 
     return ret
-
 
 
 # --------------------------------------------------
@@ -75,6 +74,8 @@ def test_rle():
     assert rle('AA') == 'A2'
     assert rle('AAAAA') == 'A5'
     assert rle('ACCGGGTTTT') == 'AC2G3T4'
+
+
 # --------------------------------------------------
 if __name__ == '__main__':
     main()
