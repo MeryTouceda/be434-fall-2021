@@ -41,22 +41,24 @@ def main():
 # --------------------------------------------------
 def rle(seq):
     """ Create RLE """
-    Count = namedtuple('Count', ['letter', 'count'])
-    
+
+
+    combined= []
+    seq = seq + '.'
     prev = ''
-    counts = []
+    count = 1
 
-    for char in seq:
-        count = Count(letter = char, count = 1)
-        if char == prev:
-            count = count.replace(letter = char, count = count+1)
-        else: 
-            count = count.replace(letter = char, count = count)
-        prev = char
+    for base in seq:
+        if base == prev: 
+            count +=1
+        elif base == ".":
+            combined.append([base, count])
+        else: # if base and previous are not same, move up one
+            combined.append([base, count])
+            prev = base
+            count = 1
 
-
-
-    return ''
+    return(combined)
 
 # --------------------------------------------------
 def test_rle():
