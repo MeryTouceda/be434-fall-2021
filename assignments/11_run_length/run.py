@@ -7,8 +7,6 @@ Purpose: Run-length encoding/data compression
 
 import argparse
 import os
-from collections import namedtuple
-
 
 # --------------------------------------------------
 def get_args():
@@ -24,9 +22,9 @@ def get_args():
 
     args = parser.parse_args()
 
-    if os.path.isfile(args.text): 
-        args.text = open(args.text).read().rstrip() 
-    
+    if os.path.isfile(args.text):
+        args.text = open(args.text).read().rstrip()
+
     return args
 
 
@@ -40,25 +38,33 @@ def main():
 
 # --------------------------------------------------
 def rle(seq):
+#def rle(seq: str) -> str:
     """ Create RLE """
 
 
     combined= []
-    seq = seq + '.'
     prev = ''
-    count = 1
+    count = 0
 
     for base in seq:
-        if base == prev: 
-            count +=1
-        elif base == ".":
-            combined.append([base, count])
-        else: # if base and previous are not same, move up one
-            combined.append([base, count])
+        if prev == '':
             prev = base
             count = 1
+        elif base == prev:
+            count +=1
+        else: # if base and previous are not same, move up one
+            combined.append([prev, count])
+            prev = base
+            count = 1
+    combined.append([prev, count]) # for the final set
 
-    return(combined)
+    ret = ''
+    for char, count in combined:
+        ret += '{}{}'.format(char,count if count > 1 else '')
+
+    return ret
+
+
 
 # --------------------------------------------------
 def test_rle():
