@@ -43,10 +43,18 @@ def rle(seq):
     """ Create RLE """
     Count = namedtuple('Count', ['letter', 'count'])
     
-    for char in seq:
-        count = [char, ]
+    prev = ''
+    counts = []
 
-        if 
+    for char in seq:
+        count = Count(letter = char, count = 1)
+        if char == prev:
+            count = count.replace(letter = char, count = count+1)
+        else: 
+            count = count.replace(letter = char, count = count)
+        prev = char
+
+
 
     return ''
 
