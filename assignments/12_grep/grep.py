@@ -19,29 +19,26 @@ def get_args():
         description='Python grep',
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument('PATTERN',
-                        metavar='str',
-                        help='A positional argument')
+    parser.add_argument('PATTERN', metavar='str', help='A positional argument')
 
     parser.add_argument('FILE',
-                        nargs = '*',
+                        nargs='+',
                         help='Input file(s)',
                         metavar='FILE',
                         type=argparse.FileType('rt'))
-    
+
     parser.add_argument('-i',
                         '--insensitive',
                         help='Case-insensitive search',
                         action='store_true',
                         default=False)
-    
+
     parser.add_argument('-o',
                         '--outfile',
                         help='Output)',
                         metavar='FILE',
-                        type=argparse.FileType('wt'), 
+                        type=argparse.FileType('wt'),
                         default=sys.stdout)
-
 
     return parser.parse_args()
 
@@ -56,20 +53,21 @@ def main():
         if args.outfile != sys.stdout:
             #args.outfile.write('{}:'.format(fh.name) if len(args.FILE) > 1 else None)
             for line in fh:
-                search = re.search(args.PATTERN, line, re.I) if args.insensitive else re.search(args.PATTERN, line) 
+                search = re.search(args.PATTERN, line,
+                                   re.I) if args.insensitive else re.search(
+                                       args.PATTERN, line)
                 if search:
                     args.outfile.write(line)
-
 
         else:  # no outfile
             print('{}:'.format(fh.name)) if len(args.FILE) > 1 else None
             for line in fh:
-                search = re.search(args.PATTERN, line, re.I) if args.insensitive else re.search(args.PATTERN, line) 
+                search = re.search(args.PATTERN, line,
+                                   re.I) if args.insensitive else re.search(
+                                       args.PATTERN, line)
                 if search:
-                    print(line, end ="")
+                    print(line, end="")
 
-
-    
 
 # --------------------------------------------------
 if __name__ == '__main__':
