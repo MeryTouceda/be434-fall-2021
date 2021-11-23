@@ -53,11 +53,21 @@ def main():
     args = get_args()
 
     for fh in args.FILE:
-        print('{}:'.format(fh.name) if len(args.FILE) > 1 else '')
-        for line in fh:
-            search = re.search(args.PATTERN, line, re.I) if args.insensitive else re.search(args.PATTERN, line) 
-            if search: 
-                print(line)
+        if args.outfile != sys.stdout:
+            #args.outfile.write('{}:'.format(fh.name) if len(args.FILE) > 1 else None)
+            for line in fh:
+                search = re.search(args.PATTERN, line, re.I) if args.insensitive else re.search(args.PATTERN, line) 
+                if search:
+                    args.outfile.write(line)
+
+
+        else:  # no outfile
+            print('{}:'.format(fh.name)) if len(args.FILE) > 1 else None
+            for line in fh:
+                search = re.search(args.PATTERN, line, re.I) if args.insensitive else re.search(args.PATTERN, line) 
+                if search:
+                    print(line, end ="")
+
 
     
 
