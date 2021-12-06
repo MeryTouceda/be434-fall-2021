@@ -35,7 +35,7 @@ def get_args():
 
 # --------------------------------------------------
 def main():
-    """Make a jazz noise here"""
+    """Reverse the order of the input lines"""
 
     args = get_args()
 
