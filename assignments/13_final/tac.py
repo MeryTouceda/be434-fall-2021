@@ -19,8 +19,8 @@ def get_args():
 
     parser.add_argument('files',
                         metavar='FILE',
-                        nargs = '+',
-                        help='Input file(s)', 
+                        nargs='+',
+                        help='Input file(s)',
                         type=argparse.FileType('rt'))
 
     parser.add_argument('-o',
@@ -30,7 +30,6 @@ def get_args():
                         type=argparse.FileType('wt'),
                         default=sys.stdout)
 
-
     return parser.parse_args()
 
 
@@ -39,9 +38,13 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    for fh in args.files: 
-        
 
+    for fh in args.files:
+        file_lines = []
+        for line in fh:
+            file_lines.append(line.rstrip("\n"))
+        for newline in file_lines[::-1]:
+            print(newline, file=args.outfile)
 
 
 # --------------------------------------------------
